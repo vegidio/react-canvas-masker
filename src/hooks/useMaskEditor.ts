@@ -666,8 +666,11 @@ export function useMaskEditor(props: UseMaskEditorProps): UseMaskEditorReturn {
       const color = hexToRgb(hexColor);
       if (imageData && color) {
         for (let i = 0; i < imageData.data.length; i += 4) {
-          const pixelColor =
-            (imageData.data[i] === 255) != invert ? [255, 255, 255] : color;
+          const isPureWhite =
+            imageData.data[i] === 255 &&
+            imageData.data[i + 1] === 255 &&
+            imageData.data[i + 2] === 255;
+          const pixelColor = isPureWhite != invert ? [255, 255, 255] : color;
           imageData.data[i] = pixelColor[0];
           imageData.data[i + 1] = pixelColor[1];
           imageData.data[i + 2] = pixelColor[2];
